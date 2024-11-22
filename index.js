@@ -21,8 +21,16 @@ const tabName = document.head.querySelector("title");
 
 // Recommended: Ask for the city name and then the rest of the code
 
-
-
-
+/*
+1. User enters city name through prompt.
+2. Call getCityByName(userInput):
+    - If city is found:
+        - Call markCityBox(targetCity, "target")
+        - Call getClosestCity(targetCity) and getFurthestCity(targetCity)
+        - Call updateBoxDistance(closestCity, furthestCity)
+    - Else:
+        - Show "City not found" message.
+3. Call createDistanceTable() to show all city-to-city distances.
+*/
 
 createCityBoxes();
