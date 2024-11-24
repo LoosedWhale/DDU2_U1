@@ -19,6 +19,36 @@ function findCityById(cityId) {
     return null;
 }
 
+function getClosestCity(targetCityObject) {
+    let closestCity = null;
+    let minDistance = Infinity;
+
+    for (let distance of distances) {
+        if ([distance.city1, distance.city2].includes(targetCityObject.id)) {
+
+            let otherCityId;
+            if (distance.city1 === targetCityObject.id) {
+                otherCityId = distance.city2;
+            } else {
+                otherCityId = distance.city1;
+            }
+            
+            if (distance.distance < minDistance) {
+                minDistance = distance.distance;
+                closestCity = findCityById(otherCityId);
+            }
+        }
+    }
+
+    if (closestCity) {
+        closestCity.distance = minDistance;
+    }
+    return closestCity;
+}
+
+
+
+
 
 // Recommended: constants with references to existing HTML-elements
 const citiesDiv = document.querySelector("#cities"); 
