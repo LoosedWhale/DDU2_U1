@@ -30,7 +30,7 @@ function markCityBox(cityObject, typeOfCity) {
             } else {
                 cityId = furthestCity.id;
             }
-            cityBox.classList.add(cityId); // Add "closest" or "furthest" id
+            cityBox.classList.add(cityId); 
         }
     }
 }
@@ -96,29 +96,69 @@ function getFurthestCity(targetCityObject) {
     return getCityByDistance(targetCityObject, false);
 }
 
+function updateBoxDistance(furthestCity, closestCity) {
+    const closestBox = document.querySelector(".closest");
+    const furthestBox = document.querySelector(".furthest");
+
+    if (closestBox) {
+        closestBox.textContent += ` is ${closestCity.distance / 10} miles away`;
+    }
+
+    if (furthestBox) {
+        furthestBox.textContent += ` is ${furthestCity.distance / 10} miles away`;
+    }
+
+    const closesth3 = document.querySelector("#closest");
+    const furthestsh3 = document.querySelector("#furthest");
+
+    if (closesth3) {
+        closesth3.textContent = closestCity.name;
+    }
+
+    if (furthestsh3) {
+        furthestsh3.textContent = furthestCity.name;
+    }
+}
+
 
 
 // Recommended: constants with references to existing HTML-elements
 const citiesDiv = document.querySelector("#cities"); 
 const h2 = document.querySelector("h2");
 const h3 = document.querySelector("h3");
-const furthestCity = document.querySelector("#furthest");
 const closestCity = document.querySelector("#closest");
-const table = document.querySelector("#table");
+const furthestCity = document.querySelector("#furthest");
 const tabName = document.head.querySelector("title"); 
 
 // Recommended: Ask for the city name and then the rest of the code
 
-/*
-1. User enters city name through prompt.
-2. Call getCityByName(userInput):
-    - If city is found:
-        - Call markCityBox(targetCity, "target")
-        - Call getClosestCity(targetCity) and getFurthestCity(targetCity)
-        - Call updateBoxDistance(closestCity, furthestCity)
-    - Else:
-        - Show "City not found" message.
-3. Call createDistanceTable() to show all city-to-city distances.
-*/
 
 createCityBoxes();
+
+const userInput = prompt("Enter the name of a city:");
+const targetCityObject = getCityByName(userInput);
+
+if (targetCityObject !== null) {
+    markCityBox(targetCityObject, "target");
+
+    const closestCity = getClosestCity(targetCityObject);
+    const furthestCity = getFurthestCity(targetCityObject);
+
+    markCityBox(closestCity, "closest");
+    markCityBox(furthestCity, "furthest");
+
+    updateBoxDistance(furthestCity, closestCity);
+
+    const h2 = document.querySelector("h2");
+    h2.textContent = `${targetCityObject.name} (${targetCityObject.country})`;
+    tabName.innerHTML = targetCityObject.name;
+} else {
+
+    const h2 = document.querySelector("h2");
+    const h3 = document.querySelector("h3");
+    h2.textContent = `${userInput} is not in the database`;
+    tabName.innerHTML = "City Not Found";
+    h3.style.display = "none";
+
+}
+
