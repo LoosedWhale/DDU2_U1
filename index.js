@@ -46,7 +46,34 @@ function getClosestCity(targetCityObject) {
     return closestCity;
 }
 
+function getFurthestCity(targetCityObject) {
+    let furthestCity = null;
+    let maxDistance = 0;
 
+    for (let distance of distances) {
+        if ([distance.city1, distance.city2].includes(targetCityObject.id)) {
+
+            let otherCityId;
+            if (distance.city1 === targetCityObject.id) {
+                otherCityId = distance.city2;
+            } else {
+                otherCityId = distance.city1;
+            }
+            
+            if (distance.distance > maxDistance) {
+                maxDistance = distance.distance;
+                furthestCity = findCityById(otherCityId);
+            }
+
+        }
+    }
+
+    if (furthestCity) {
+        furthestCity.distance = maxDistance;
+    }
+
+    return furthestCity;
+}
 
 
 
