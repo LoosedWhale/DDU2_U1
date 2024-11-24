@@ -121,6 +121,54 @@ function updateBoxDistance(furthestCity, closestCity) {
 }
 
 
+function createTable() {
+    const table = document.querySelector("#table");
+    table.style.display = "grid";
+    table.style.gridTemplateRows = "auto repeat(39, 1fr)";
+    table.style.gridTemplateColumns = "auto repeat(39, 1fr)";
+
+    for (let row = 0; row <= 39; row++) {
+        for (let col = 0; col <= 39; col++) {
+            let tableCell = document.createElement("div");
+            tableCell.classList.add("cell");
+
+            if (row == 0) {
+                tableCell.classList.add("head_row");
+                if (col != 0) {
+                    tableCell.textContent = col - 1;
+                }
+            }
+
+            if (row >= 1 && col >= 1) {
+                for (let key in distances) {
+                    if (distances[key].city1 == col - 1 && distances[key].city2 == row - 1) {
+                        tableCell.textContent = distances[key].distance / 10;
+                    }
+                    if (distances[key].city2 == col - 1 && distances[key].city1 == row - 1) {
+                        tableCell.textContent = distances[key].distance / 10;
+                    }
+                }
+            }
+
+            if (col == 0) {
+                tableCell.classList.add("head_column");
+                if (row >= 1) {
+                    tableCell.textContent = `${cities[row - 1].id}-${cities[row - 1].name}`;
+                }
+            }
+
+            if (col % 2 == 1 && row != 0) {
+                tableCell.classList.add("even_col");
+            }
+            if (row % 2 == 1) {
+                tableCell.classList.add("even_row");
+            }
+
+            table.appendChild(tableCell);
+        }
+    }
+}
+
 
 // Recommended: constants with references to existing HTML-elements
 const citiesDiv = document.querySelector("#cities"); 
@@ -128,6 +176,7 @@ const h2 = document.querySelector("h2");
 const h3 = document.querySelector("h3");
 const closestCity = document.querySelector("#closest");
 const furthestCity = document.querySelector("#furthest");
+const table = document.querySelector("#table");
 const tabName = document.head.querySelector("title"); 
 
 // Recommended: Ask for the city name and then the rest of the code
@@ -162,3 +211,4 @@ if (targetCityObject !== null) {
 
 }
 
+createTable();
