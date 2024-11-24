@@ -10,24 +10,6 @@ function createCityBoxes() {
     }
 }
 
-function findCityById(cityId) {
-    for (let city of cities) {
-        if (city.id === cityId) {
-            return city;
-        }
-    }
-    return null;
-}
-
-function getCityByName(cityName) {
-    for (let city of cities) {
-        if (city.name.toLowerCase() === cityName.toLowerCase()) {
-            return city;
-        }
-    }
-    return null;
-}
-
 function markCityBox(cityObject, typeOfCity) {
     const cityBoxes = document.querySelectorAll(".cityBox");
     let cityBox = null;
@@ -52,6 +34,26 @@ function markCityBox(cityObject, typeOfCity) {
         }
     }
 }
+
+
+function findCityById(cityId) {
+    for (let city of cities) {
+        if (city.id === cityId) {
+            return city;
+        }
+    }
+    return null;
+}
+
+function getCityByName(cityName) {
+    for (let city of cities) {
+        if (city.name.toLowerCase() === cityName.toLowerCase()) {
+            return city;
+        }
+    }
+    return null;
+}
+
 
 function getCityByDistance(targetCityObject, findClosest = true) {
     let targetCity = null;
