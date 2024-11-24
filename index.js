@@ -10,6 +10,16 @@ function createCityBoxes() {
     }
 }
 
+function findCityById(cityId) {
+    for (let city of cities) {
+        if (city.id === cityId) {
+            return city;
+        }
+    }
+    return null;
+}
+
+
 // Recommended: constants with references to existing HTML-elements
 const citiesDiv = document.querySelector("#cities"); 
 const h2 = document.querySelector("h2");
