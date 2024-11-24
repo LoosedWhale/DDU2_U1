@@ -28,6 +28,31 @@ function getCityByName(cityName) {
     return null;
 }
 
+function markCityBox(cityObject, typeOfCity) {
+    const cityBoxes = document.querySelectorAll(".cityBox");
+    let cityBox = null;
+    for (let box of cityBoxes) {
+        if (box.textContent === cityObject.name) {
+            cityBox = box;
+            break;
+        }
+    }
+
+    if (cityBox) {
+        if (typeOfCity === "target") {
+            cityBox.classList.add(typeOfCity); 
+        } else {
+            let cityId;
+            if (typeOfCity === "closest") {
+                cityId = closestCity.id;
+            } else {
+                cityId = furthestCity.id;
+            }
+            cityBox.classList.add(cityId); // Add "closest" or "furthest" id
+        }
+    }
+}
+
 function getCityByDistance(targetCityObject, findClosest = true) {
     let targetCity = null;
     let targetDistance;
