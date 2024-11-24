@@ -19,9 +19,14 @@ function findCityById(cityId) {
     return null;
 }
 
-function getClosestCity(targetCityObject) {
-    let closestCity = null;
-    let minDistance = Infinity;
+function getCityByDistance(targetCityObject, findClosest = true) {
+    let targetCity = null;
+    let targetDistance;
+    if (findClosest) {
+        targetDistance = Infinity;
+    } else {
+        targetDistance = 0;
+    }
 
     for (let distance of distances) {
         if ([distance.city1, distance.city2].includes(targetCityObject.id)) {
@@ -32,47 +37,27 @@ function getClosestCity(targetCityObject) {
             } else {
                 otherCityId = distance.city1;
             }
-            
-            if (distance.distance < minDistance) {
-                minDistance = distance.distance;
-                closestCity = findCityById(otherCityId);
+
+            if ((findClosest && distance.distance < targetDistance) || (!findClosest && distance.distance > targetDistance)) {
+                targetDistance = distance.distance;
+                targetCity = findCityById(otherCityId);
             }
         }
     }
 
-    if (closestCity) {
-        closestCity.distance = minDistance;
+    if (targetCity) {
+        targetCity.distance = targetDistance;
     }
-    return closestCity;
+
+    return targetCity;
+}
+
+function getClosestCity(targetCityObject) {
+    return getCityByDistance(targetCityObject, true);
 }
 
 function getFurthestCity(targetCityObject) {
-    let furthestCity = null;
-    let maxDistance = 0;
-
-    for (let distance of distances) {
-        if ([distance.city1, distance.city2].includes(targetCityObject.id)) {
-
-            let otherCityId;
-            if (distance.city1 === targetCityObject.id) {
-                otherCityId = distance.city2;
-            } else {
-                otherCityId = distance.city1;
-            }
-            
-            if (distance.distance > maxDistance) {
-                maxDistance = distance.distance;
-                furthestCity = findCityById(otherCityId);
-            }
-
-        }
-    }
-
-    if (furthestCity) {
-        furthestCity.distance = maxDistance;
-    }
-
-    return furthestCity;
+    return getCityByDistance(targetCityObject, false);
 }
 
 
