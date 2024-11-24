@@ -19,6 +19,15 @@ function findCityById(cityId) {
     return null;
 }
 
+function getCityByName(cityName) {
+    for (let city of cities) {
+        if (city.name.toLowerCase() === cityName.toLowerCase()) {
+            return city;
+        }
+    }
+    return null;
+}
+
 function getCityByDistance(targetCityObject, findClosest = true) {
     let targetCity = null;
     let targetDistance;
